@@ -1,8 +1,8 @@
 user_db.db table'ai:
 
-skinstotrack - cia rasom visus skinus, kuriu kainas seksim. add_queries.py atsakingas uz insertinima i tabla
+tracker - cia rasom visus skinus, kuriu kainas seksim. add_queries.py atsakingas uz insertinima i tabla
 
-skinstotrack stulpeliai:
+tracker stulpeliai:
 goods_id (text) - buff id
 skin_name (text) - skino pavadinimas
 float_value (double) - norimas floatas
