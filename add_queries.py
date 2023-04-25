@@ -34,3 +34,6 @@ id_dictionary, all_names = get_ids()
 query = process.extractOne(input("Enter skin: "), all_names)[0]
 
 print(f"id: {id_dictionary[query]}, name: {query}")
+
+# TODODODODO: store all ids and names of skins that users want to track in a text file or some kind of
+# database i guess idk
