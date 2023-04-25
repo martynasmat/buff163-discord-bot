@@ -33,7 +33,7 @@ def get_ids():
 
 def search(name_param):
     id_dictionary, all_names = get_ids()
-    return process.extractOne(name_param, all_names)[0]
+    return id_dictionary[process.extractOne(name_param, all_names)[0]]
 
 
 def add_tracker(name_to_search, float_param, pattern_id_param, discord_id):
@@ -41,10 +41,7 @@ def add_tracker(name_to_search, float_param, pattern_id_param, discord_id):
     connection = sqlite3.connect('user_db.db')
     cursor = connection.cursor()
     cursor.execute(f"""
-    INSERT INTO tracker VALUES (
-        '{skin_info[0]}', '{skin_info[1]}', {float_param}, '{pattern_id_param}', '{discord_id}'
-    )
+    INSERT INTO tracker VALUES 
+    ('{skin_info[0]}', '{skin_info[1]}', {float_param}, '{pattern_id_param}', '{discord_id}')
     """)
-
-# TODODODODO: store all ids and names of skins that users want to track in a text file or some kind of
-# database i guess idk
+    connection.commit()
