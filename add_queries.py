@@ -1,5 +1,4 @@
 from thefuzz import process
-import sqlite3
 import mysql.connector
 
 def read_ids():
@@ -8,12 +7,7 @@ def read_ids():
 
 
 def get_ids():
-    # id_dict stores all skin names as keys and a list containing their
-    # respective formatted names and buff.163.com ids as values
     id_dict = dict()
-
-    # name_list contains all formatted names of skins
-    name_list = list()
 
     lines = read_ids()
     for line in lines:
@@ -26,27 +20,26 @@ def get_ids():
         line_formatted = line_formatted.replace('(', '')
         line_formatted = line_formatted.replace(')', '')
         id_dict[line_formatted] = [line[0], line[1].replace('\n', '')]
-        name_list.append(line_formatted)
 
-    return id_dict, name_list
+    return id_dict
 
 
 def search(name_param):
-    id_dictionary, all_names = get_ids()
-    return id_dictionary[process.extractOne(name_param, all_names)[0]]
+    id_dictionary = get_ids()
+    return id_dictionary[process.extractOne(name_param, list(id_dictionary.keys()))[0]]
 
 
-def add_tracker(name_to_search, float_param, pattern_id_param, discord_id):
-    skin_info = search(name_to_search)
-    connection = sqlite3.connect('user_db.db')
-    cursor = connection.cursor()
-    cursor.execute(f"""
-    INSERT INTO tracker VALUES 
-    ('{skin_info[0]}', '{skin_info[1]}', {float_param}, '{pattern_id_param}', '{discord_id}')
-    """)
-    connection.commit()
+# def add_tracker(name_to_search, float_param, pattern_id_param, discord_id):
+#     skin_info = search(name_to_search)
+#     connection = sqlite3.connect('user_db.db')
+#     cursor = connection.cursor()
+#     cursor.execute(f"""
+#     INSERT INTO tracker VALUES 
+#     ('{skin_info[0]}', '{skin_info[1]}', {float_param}, '{pattern_id_param}', '{discord_id}')
+#     """)
+#     connection.commit()
 
-def connect_to_database():
+def insert_buff_items_to_db():
     db = mysql.connector.connect(
         host='containers-us-west-41.railway.app',
         user='root',
@@ -55,4 +48,20 @@ def connect_to_database():
         port='6011'
     )
 
-connect_to_database()
+    item_ids = get_ids()
+
+    query = f"""INSERT INTO buff_items VALUES """
+
+    for key, value in item_ids.items():
+        value[1] = value[1].replace("'", "''")
+        key = key.replace("'", "''")
+
+        query += f"""('{value[0]}', '{value[1]}', '{key}'), """
+
+    query = query[:len(query) - 2]
+    query += ';'
+    cursor = db.cursor()
+    cursor.execute(query)
+
+    db.commit()
+    db.close()
