@@ -1,6 +1,6 @@
 from thefuzz import process
 import sqlite3
-
+import mysql.connector
 
 def read_ids():
     with open('skin_id_list.txt', 'r', encoding="utf-8") as id_file:
@@ -45,3 +45,14 @@ def add_tracker(name_to_search, float_param, pattern_id_param, discord_id):
     ('{skin_info[0]}', '{skin_info[1]}', {float_param}, '{pattern_id_param}', '{discord_id}')
     """)
     connection.commit()
+
+def connect_to_database():
+    db = mysql.connector.connect(
+        host='containers-us-west-41.railway.app',
+        user='root',
+        password='5bH078yqN9J3m4JNMlal',
+        database='railway',
+        port='6011'
+    )
+
+connect_to_database()
