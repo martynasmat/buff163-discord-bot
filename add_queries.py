@@ -12,9 +12,21 @@ def open_connection():
     )
 
 
-def read_ids():
-    with open('skin_id_list.txt', 'r', encoding="utf-8") as id_file:
-        return id_file.readlines()
+#  def read_ids():
+#      with open('skin_id_list.txt', 'r', encoding="utf-8") as id_file:
+#          return id_file.readlines()
+
+
+def fetch_ids():
+    connection = open_connection()
+    cursor = connection.cursor()
+
+    query = """SELECT item_name_formatted FROM buff_items"""
+    cursor.execute(query)
+    result = cursor.fetchall()
+
+    connection.close()
+    return [x[0] for x in result]
 
 
 def get_ids():
@@ -22,7 +34,7 @@ def get_ids():
     # respective formatted names and buff.163.com ids as values
     id_dict = dict()
 
-    lines = read_ids()
+    lines = fetch_ids()
     for line in lines:
         line = line.split(';')
         line_formatted = line[1].lower()
@@ -38,10 +50,10 @@ def get_ids():
 
 
 def search_by_name(name_param):
-    id_dictionary = get_ids()
+    all_names = fetch_ids()
     max_names = list()
 
-    for name in list(id_dictionary.keys()):
+    for name in all_names:
         max_names.append((name, difflib.SequenceMatcher(None, name, name_param).ratio()))
 
     return sorted(max_names, key=lambda item: item[1], reverse=True)[0][0]
