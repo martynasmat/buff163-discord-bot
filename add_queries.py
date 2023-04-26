@@ -7,6 +7,8 @@ def read_ids():
 
 
 def get_ids():
+    # id_dict stores all skin names as keys and a list containing their
+    # respective formatted names and buff.163.com ids as values
     id_dict = dict()
 
     lines = read_ids()
