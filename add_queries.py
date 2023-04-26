@@ -29,16 +29,6 @@ def search(name_param):
     return id_dictionary[process.extractOne(name_param, list(id_dictionary.keys()))[0]]
 
 
-# def add_tracker(name_to_search, float_param, pattern_id_param, discord_id):
-#     skin_info = search(name_to_search)
-#     connection = sqlite3.connect('user_db.db')
-#     cursor = connection.cursor()
-#     cursor.execute(f"""
-#     INSERT INTO tracker VALUES 
-#     ('{skin_info[0]}', '{skin_info[1]}', {float_param}, '{pattern_id_param}', '{discord_id}')
-#     """)
-#     connection.commit()
-
 def insert_buff_items_to_db():
     db = mysql.connector.connect(
         host='containers-us-west-41.railway.app',
@@ -55,13 +45,34 @@ def insert_buff_items_to_db():
     for key, value in item_ids.items():
         value[1] = value[1].replace("'", "''")
         key = key.replace("'", "''")
-
+        
+        # ('goods_id', 'item_name', 'item_name_formatted')
         query += f"""('{value[0]}', '{value[1]}', '{key}'), """
 
-    query = query[:len(query) - 2]
-    query += ';'
-    cursor = db.cursor()
-    cursor.execute(query)
+    query = query[:len(query) - 2]  # Remove trailing comma and space
+    query += ';'                    # Query end
+    db.cursor().execute(query)
 
     db.commit()
     db.close()
+
+
+def query_item_by_name(item_name):
+    db = mysql.connector.connect(
+        host='containers-us-west-41.railway.app',
+        user='root',
+        password='5bH078yqN9J3m4JNMlal',
+        database='railway',
+        port='6011'
+    )
+
+    query = f"""SELECT * FROM buff_items WHERE goods_id={search(item_name)[0]};"""
+    cursor = db.cursor()
+    cursor.execute(query)
+
+    result = cursor.fetchone()  # Result of query
+    db.close()
+    
+    return result
+
+print(query_item_by_name("aquamarine"))
