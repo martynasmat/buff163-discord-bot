@@ -2,6 +2,16 @@ import mysql.connector
 import difflib
 
 
+def open_connection():
+    return mysql.connector.connect(
+        host='containers-us-west-41.railway.app',
+        user='root',
+        password='5bH078yqN9J3m4JNMlal',
+        database='railway',
+        port='6011'
+    )
+
+
 def read_ids():
     with open('skin_id_list.txt', 'r', encoding="utf-8") as id_file:
         return id_file.readlines()
@@ -38,14 +48,7 @@ def search_by_name(name_param):
 
 
 def insert_buff_items_to_db():
-    db = mysql.connector.connect(
-        host='containers-us-west-41.railway.app',
-        user='root',
-        password='5bH078yqN9J3m4JNMlal',
-        database='railway',
-        port='6011'
-    )
-
+    connection = open_connection()
     item_ids = get_ids()
 
     query = f"""INSERT INTO buff_items VALUES """
@@ -59,20 +62,14 @@ def insert_buff_items_to_db():
 
     query = query[:len(query) - 2]  # Remove trailing comma and space
     query += ';'                    # Query end
-    db.cursor().execute(query)
+    connection.cursor().execute(query)
 
-    db.commit()
-    db.close()
+    connection.commit()
+    connection.close()
 
 
 def query_item_by_name(item_name):
-    connection = mysql.connector.connect(
-        host='containers-us-west-41.railway.app',
-        user='root',
-        password='5bH078yqN9J3m4JNMlal',
-        database='railway',
-        port='6011'
-    )
+    connection = open_connection()
 
     query = f"""SELECT * FROM buff_items WHERE item_name_formatted='{search_by_name(item_name)}';"""
     cursor = connection.cursor()
@@ -85,13 +82,7 @@ def query_item_by_name(item_name):
 
 
 def query_item_by_id(id_param):
-    connection = mysql.connector.connect(
-        host='containers-us-west-41.railway.app',
-        user='root',
-        password='5bH078yqN9J3m4JNMlal',
-        database='railway',
-        port='6011'
-    )
+    connection = open_connection()
 
     query = f"""SELECT * FROM buff_items WHERE goods_id='{id_param}';"""
     cursor = connection.cursor()
