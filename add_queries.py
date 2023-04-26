@@ -27,7 +27,7 @@ def get_ids():
     return id_dict
 
 
-def search(name_param):
+def search_by_name(name_param):
     id_dictionary = get_ids()
     max_names = list()
 
@@ -73,8 +73,8 @@ def query_item_by_name(item_name):
         database='railway',
         port='6011'
     )
-    print(search(item_name))
-    query = f"""SELECT * FROM buff_items WHERE item_name_formatted='{search(item_name)}';"""
+
+    query = f"""SELECT * FROM buff_items WHERE item_name_formatted='{search_by_name(item_name)}';"""
     cursor = connection.cursor()
     cursor.execute(query)
 
@@ -93,7 +93,7 @@ def query_item_by_id(id_param):
         port='6011'
     )
 
-    query = f"""SELECT * FROM buff_items WHERE goods_id='{search(id_param)}';"""
+    query = f"""SELECT * FROM buff_items WHERE goods_id='{id_param}';"""
     cursor = connection.cursor()
     cursor.execute(query)
 
@@ -101,5 +101,6 @@ def query_item_by_id(id_param):
     connection.close()
 
     return result
+
 
 print(query_item_by_name(input()))
