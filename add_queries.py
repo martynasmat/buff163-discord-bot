@@ -1,5 +1,6 @@
-from thefuzz import process
 import mysql.connector
+import difflib
+
 
 def read_ids():
     with open('skin_id_list.txt', 'r', encoding="utf-8") as id_file:
@@ -28,7 +29,12 @@ def get_ids():
 
 def search(name_param):
     id_dictionary = get_ids()
-    return id_dictionary[process.extractOne(name_param, list(id_dictionary.keys()))[0]]
+    max_names = list()
+
+    for name in list(id_dictionary.keys()):
+        max_names.append((name, difflib.SequenceMatcher(None, name, name_param).ratio()))
+
+    return sorted(max_names, key=lambda item: item[1], reverse=True)[0][0]
 
 
 def insert_buff_items_to_db():
@@ -60,7 +66,26 @@ def insert_buff_items_to_db():
 
 
 def query_item_by_name(item_name):
-    db = mysql.connector.connect(
+    connection = mysql.connector.connect(
+        host='containers-us-west-41.railway.app',
+        user='root',
+        password='5bH078yqN9J3m4JNMlal',
+        database='railway',
+        port='6011'
+    )
+    print(search(item_name))
+    query = f"""SELECT * FROM buff_items WHERE item_name_formatted='{search(item_name)}';"""
+    cursor = connection.cursor()
+    cursor.execute(query)
+
+    result = cursor.fetchone()  # Result of query
+    connection.close()
+    
+    return result
+
+
+def query_item_by_id(id_param):
+    connection = mysql.connector.connect(
         host='containers-us-west-41.railway.app',
         user='root',
         password='5bH078yqN9J3m4JNMlal',
@@ -68,13 +93,13 @@ def query_item_by_name(item_name):
         port='6011'
     )
 
-    query = f"""SELECT * FROM buff_items WHERE goods_id={search(item_name)[0]};"""
-    cursor = db.cursor()
+    query = f"""SELECT * FROM buff_items WHERE goods_id='{search(id_param)}';"""
+    cursor = connection.cursor()
     cursor.execute(query)
 
     result = cursor.fetchone()  # Result of query
-    db.close()
-    
+    connection.close()
+
     return result
 
-print(query_item_by_name("aquamarine"))
+print(query_item_by_name(input()))
