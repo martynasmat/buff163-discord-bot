@@ -95,15 +95,15 @@ def query_item_by_name(item_name):
 
 
 def get_id_from_url(url):
+    # returns the goods_id value from provided buff.163.com market url
     return re.findall("goods\/([0-9]+)", url)[0]
 
 
 def query_item_by_id(id_param):
-    goods_id = get_id_from_url(id_param)
-
+    # query item from table by its goods_id from its buff.163.com market url
     connection = open_connection()
 
-    query = f"""SELECT * FROM buff_items WHERE goods_id='{goods_id}';"""
+    query = f"""SELECT * FROM buff_items WHERE goods_id='{id_param}';"""
     cursor = connection.cursor()
     cursor.execute(query)
 
@@ -113,4 +113,37 @@ def query_item_by_id(id_param):
     return result
 
 
-print(query_item_by_id(input()))
+def insert_to_track(cursor, item_obj, discord_id_param, float_value_param, pattern_id_param):
+    goods_id = item_obj[0]
+    item_name = item_obj[1]
+    item_name_formatted = item_obj[2]
+    query = """INSERT INTO buff_tracker
+     (item_name, item_name_formatted, goods_id, discord_id, float_value, pattern_id)
+     VALUES """
+    values = f"""('{item_name}', '{item_name_formatted}',
+    '{goods_id}', '{discord_id_param}',
+    '{float_value_param}', '{pattern_id_param}');"""
+    query += values
+    cursor.execute(query)
+
+
+def add_item_by_name(name_param, float_param, pattern_id_param, discord_id_param):
+    connection = open_connection()
+    cursor = connection.cursor()
+    item = query_item_by_name(name_param)
+    insert_to_track(cursor, item, discord_id_param, float_param, pattern_id_param)
+    connection.commit()
+    connection.close()
+
+
+def add_item_by_id(goods_id_param, float_param, pattern_id_param, discord_id_param):
+    connection = open_connection()
+    cursor = connection.cursor()
+    item = query_item_by_id(goods_id_param)
+    insert_to_track(cursor, item, discord_id_param, float_param, pattern_id_param)
+    connection.commit()
+    connection.close()
+
+
+id = get_id_from_url(input("URL: "))
+print(add_item_by_id(id, input("float: "), input("pattern id: "), '0'))
