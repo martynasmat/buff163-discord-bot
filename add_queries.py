@@ -145,5 +145,15 @@ def add_item_by_id(goods_id_param, float_param, pattern_id_param, discord_id_par
     connection.close()
 
 
+def add_item(mode, arg, float_param, pattern_id_param, discord_id_param):
+    # mode = 0 - insert by name
+    # mode = 1 - insert by id
+    # arg - name or id, depending on mode
+    if mode:
+        add_item_by_id(arg, float_param, pattern_id_param, '0')
+    else:
+        add_item_by_name(arg, float_param, pattern_id_param, '0')
+
+
 id = get_id_from_url(input("URL: "))
-print(add_item_by_id(id, input("float: "), input("pattern id: "), '0'))
+print(add_item(1, id, input("float: "), input("pattern id: "), '0'))
