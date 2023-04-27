@@ -14,3 +14,5 @@ def get_all_items():
 
 def exec_requests(items):
     return
+
+print(get_all_items())
