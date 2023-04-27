@@ -1,5 +1,6 @@
 import mysql.connector
 import difflib
+import re
 
 
 def open_connection():
@@ -12,9 +13,9 @@ def open_connection():
     )
 
 
-#  def read_ids():
-#      with open('skin_id_list.txt', 'r', encoding="utf-8") as id_file:
-#          return id_file.readlines()
+def read_ids():
+    with open('skin_id_list.txt', 'r', encoding="utf-8") as id_file:
+        return id_file.readlines()
 
 
 def fetch_ids():
@@ -93,10 +94,16 @@ def query_item_by_name(item_name):
     return result
 
 
+def get_id_from_url(url):
+    return re.findall("goods\/([0-9]+)", url)[0]
+
+
 def query_item_by_id(id_param):
+    goods_id = get_id_from_url(id_param)
+
     connection = open_connection()
 
-    query = f"""SELECT * FROM buff_items WHERE goods_id='{id_param}';"""
+    query = f"""SELECT * FROM buff_items WHERE goods_id='{goods_id}';"""
     cursor = connection.cursor()
     cursor.execute(query)
 
@@ -106,4 +113,4 @@ def query_item_by_id(id_param):
     return result
 
 
-print(query_item_by_name(input()))
+print(query_item_by_id(input()))
