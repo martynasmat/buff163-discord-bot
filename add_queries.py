@@ -155,5 +155,5 @@ def add_item(mode, arg, float_param, pattern_id_param, discord_id_param):
         add_item_by_name(arg, float_param, pattern_id_param, '0')
 
 
-id = get_id_from_url(input("URL: "))
-print(add_item(1, id, input("float: "), input("pattern id: "), '0'))
+#id = get_id_from_url(input("URL: "))
+#print(add_item(1, id, input("float: "), input("pattern id: "), '0'))
