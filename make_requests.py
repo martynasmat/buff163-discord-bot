@@ -5,7 +5,7 @@ import json
 
 URL = 'https://buff.163.com/api/market/goods/sell_order?game=csgo'
 
-#test
+
 def get_all_items_from_db():
     connection = open_connection()
     cursor = connection.cursor()
