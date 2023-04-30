@@ -1,7 +1,8 @@
 from add_queries import open_connection
-import urllib.request
+import urllib3
 import json
 import statistics
+import math
 
 
 URL = 'https://buff.163.com/api/market/goods/sell_order?game=csgo'
@@ -31,20 +32,18 @@ def get_all_items_from_db():
 def send_request(item_param):
     username = 'buffbot'
     password = 'bUffbot123123987987'
+    proxy_login_headers = urllib3.make_headers(proxy_basic_auth=f'{username}:{password}')
     entry = ('http://customer-%s:%s@pr.oxylabs.io:7777' %
              (username, password))
-    query = urllib.request.ProxyHandler({
-        'http': entry,
-        'https': entry,
-    })
+    query = urllib3.ProxyManager(entry, proxy_headers=proxy_login_headers)
 
     req_url = f"{URL}&goods_id={item_param[2]}&page_num=1&sort_by=default&mode=&allow_tradable_cooldown=1"
 
     for _ in range(0, 20):
         try:
-            execute = urllib.request.build_opener(query)
-            response = execute.open(req_url).read()
-            json_data = json.loads(response)
+            response = query.request('GET', req_url)
+            print(response.data)
+            json_data = json.loads(response.data)
             item_obj = Item(json_data, req_url)
             return item_obj
         except:
@@ -57,7 +56,7 @@ def is_deal_found(item_obj_param, item_tracker_param):
     desired_margin = item_tracker_param[6]
     median = statistics.median(item_obj_param.price_list)
     found_deal = False
-    for i in range(0, 5):
+    for i in range(0, math.floor(len(item_obj_param.price_list) / 2)):
         print(median)
         print(100 - item_obj_param.price_list[i] / median * 100)
         if 100 - item_obj_param.price_list[i] / median * 100 >= desired_margin:
