@@ -15,7 +15,7 @@ class Item:
 
     def assign_price_list(self, items):
         for item_element in items:
-            self.price_list.append(item_element["price"])
+            self.price_list.append(float(item_element["price"]))
 
 
 def get_all_items_from_db():
@@ -51,8 +51,30 @@ def send_request(item_param):
             pass
 
 
-for item in get_all_items_from_db():
-    item_obj = send_request(item)
+def is_deal_found(item_obj_param, item_tracker_param):
+    desired_float = item_tracker_param[4]
+    desired_pattern_id = item_tracker_param[5]
+    desired_margin = item_tracker_param[6]
+    median = statistics.median(item_obj_param.price_list)
+    found_deal = False
+    for i in range(0, 5):
+        print(median)
+        print(100 - item_obj_param.price_list[i] / median * 100)
+        if 100 - item_obj_param.price_list[i] / median * 100 >= desired_margin:
+            found_deal = True
+            break
+
+    return found_deal
+
+
+def deal_found(item_obj_param):
+    pass
+
+
+for item_tracker in get_all_items_from_db():
+    item_obj = send_request(item_tracker)
     item_obj.assign_price_list(item_obj.json_data["data"]["items"])
+    if is_deal_found(item_obj, item_tracker):
+        deal_found(item_obj)
 
     print(item_obj.price_list)
