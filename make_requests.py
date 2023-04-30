@@ -1,9 +1,21 @@
 from add_queries import open_connection
 import urllib.request
 import json
+import statistics
 
 
 URL = 'https://buff.163.com/api/market/goods/sell_order?game=csgo'
+
+
+class Item:
+    def __init__(self, json_data, purchase_url):
+        self.json_data = json_data
+        self.purchase_url = purchase_url
+        self.price_list = []
+
+    def assign_price_list(self, items):
+        for item_element in items:
+            self.price_list.append(item_element["price"])
 
 
 def get_all_items_from_db():
@@ -16,7 +28,7 @@ def get_all_items_from_db():
     return results
 
 
-def send_request(item_goods_id):
+def send_request(item_param):
     username = 'buffbot'
     password = 'bUffbot123123987987'
     entry = ('http://customer-%s:%s@pr.oxylabs.io:7777' %
@@ -25,17 +37,22 @@ def send_request(item_goods_id):
         'http': entry,
         'https': entry,
     })
-    execute = urllib.request.build_opener(query)
-    return json.loads(execute.open(f"{URL}&goods_id={item_goods_id}").read())["data"]["items"]
 
+    req_url = f"{URL}&goods_id={item_param[2]}&page_num=1&sort_by=default&mode=&allow_tradable_cooldown=1"
 
-def process_data(item_json):
-    price_list = list()
-    for item_data in item_json:
-        price_list.append(item_data["price"])
-
-    return price_list
+    for _ in range(0, 20):
+        try:
+            execute = urllib.request.build_opener(query)
+            response = execute.open(req_url).read()
+            json_data = json.loads(response)
+            item_obj = Item(json_data, req_url)
+            return item_obj
+        except:
+            pass
 
 
 for item in get_all_items_from_db():
-    print(process_data(send_request(item[2])))
+    item_obj = send_request(item)
+    item_obj.assign_price_list(item_obj.json_data["data"]["items"])
+
+    print(item_obj.price_list)
