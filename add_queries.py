@@ -113,16 +113,16 @@ def query_item_by_id(id_param):
     return result
 
 
-def insert_to_track(cursor, item_obj, discord_id_param, float_value_param, pattern_id_param):
+def insert_to_track(cursor, item_obj, discord_id_param, float_value_param, pattern_id_param, margin_param):
     goods_id = item_obj[0]
     item_name = item_obj[1]
     item_name_formatted = item_obj[2]
     query = """INSERT INTO buff_tracker
-     (item_name, item_name_formatted, goods_id, discord_id, float_value, pattern_id)
+     (item_name, item_name_formatted, goods_id, discord_id, float_value, pattern_id, margin)
      VALUES """
     values = f"""('{item_name}', '{item_name_formatted}',
     '{goods_id}', '{discord_id_param}',
-    '{float_value_param}', '{pattern_id_param}');"""
+    '{float_value_param}', '{pattern_id_param}', '{margin_param}');"""
     query += values
     cursor.execute(query)
 
@@ -136,24 +136,24 @@ def add_item_by_name(name_param, float_param, pattern_id_param, discord_id_param
     connection.close()
 
 
-def add_item_by_id(goods_id_param, float_param, pattern_id_param, discord_id_param):
+def add_item_by_id(goods_id_param, float_param, pattern_id_param, discord_id_param, margin_param):
     connection = open_connection()
     cursor = connection.cursor()
     item = query_item_by_id(goods_id_param)
-    insert_to_track(cursor, item, discord_id_param, float_param, pattern_id_param)
+    insert_to_track(cursor, item, discord_id_param, float_param, pattern_id_param, margin_param)
     connection.commit()
     connection.close()
 
 
-def add_item(mode, arg, float_param, pattern_id_param, discord_id_param):
+def add_item(mode, arg, float_param, pattern_id_param, discord_id_param, margin_param):
     # mode = 0 - insert by name
     # mode = 1 - insert by id
     # arg - name or id, depending on mode
     if mode:
-        add_item_by_id(arg, float_param, pattern_id_param, '0')
+        add_item_by_id(arg, float_param, pattern_id_param, '0', margin_param)
     else:
-        add_item_by_name(arg, float_param, pattern_id_param, '0')
+        add_item_by_name(arg, float_param, pattern_id_param, '0', margin_param)
 
 
 #id = get_id_from_url(input("URL: "))
-#print(add_item(1, id, input("float: "), input("pattern id: "), '0'))
+#print(add_item(1, id, input("float: "), input("pattern id: "), '0', '0'))
