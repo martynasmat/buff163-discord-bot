@@ -5,9 +5,39 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Buff bot</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400&display=swap"
+			rel="stylesheet"
+		/>
 		<link rel="stylesheet" href="styles.css" />
+		<script src="main.js" defer></script>
 	</head>
 	<body>
-		<a href="#">Labas</a>
+		<main>
+			<h1>Buff bot</h1>
+			<form action="#" method="post">
+				<div class="input-container">
+					<label for="item-name">
+						Which item do you want to track?
+					</label>
+					<input id="item-name" type="text" />
+				</div>
+				<div class="input-container">
+					<label for="discord-id"> What is your discord ID? </label>
+					<input id="discord-id" type="number" />
+				</div>
+				<button class="btn" type="button">Add item</button>
+				<button class="btn" type="submit">Submit</button>
+			</form>
+
+			<div class="item-list">
+				<div class="item-container">
+					<div>Item name</div>
+					<div>Float</div>
+				</div>
+			</div>
+		</main>
 	</body>
 </html>

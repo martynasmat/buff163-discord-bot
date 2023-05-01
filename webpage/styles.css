@@ -1,3 +1,31 @@
-a {
-	font-size: 5rem;
+*,
+*::before,
+*::after {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+body {
+	font-family: 'Poppins', sans-serif;
+}
+
+main {
+	width: min(100%, 40rem);
+	margin: 0 auto;
+}
+
+.input-container {
+	display: flex;
+	flex-direction: column;
+	margin-block: 1em;
+}
+
+.input-container > input {
+	width: max(50%, 200px);
+}
+
+.btn {
+	padding: 0.2em 1.2em;
+	border: none;
 }
