@@ -150,9 +150,9 @@ def add_item(mode, arg, float_param, pattern_id_param, discord_id_param, margin_
     # mode = 1 - insert by id
     # arg - name or id, depending on mode
     if mode == 0:
-        add_item_by_name(arg, float_param, pattern_id_param, '0', margin_param)
+        add_item_by_name(arg, float_param, pattern_id_param, discord_id_param, margin_param)
     elif mode == 1:
-        add_item_by_id(arg, float_param, pattern_id_param, '0', margin_param)
+        add_item_by_id(arg, float_param, pattern_id_param, discord_id_param, margin_param)
 
 
 #id = get_id_from_url(input("URL: "))

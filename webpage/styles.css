@@ -27,10 +27,15 @@ main {
 	border-radius: 0.5em;
 }
 
+form {
+	width: min(70%, 40rem);
+}
+
 .input-container {
 	display: flex;
 	flex-direction: column;
 	margin-bottom: 1em;
+	width: min(70%, 40rem);
 }
 
 .input-container > input,
@@ -65,8 +70,8 @@ main {
 }
 
 .btn-add {
-	background-color: blue;
-	color: white;
+	background-color: rgba(0, 0, 0, 0.15);
+	color: #5d5d5d;
 }
 
 .btn-submit {

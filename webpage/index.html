@@ -19,12 +19,11 @@
 			<h1>Buff bot</h1>
 			<form action="#" method="post" id="form">
 				<div class="input-container">
-					<label for="item-id"> What is the id of your item? </label>
+					<label for="buff-url"> Buff market link: </label>
 					<input
 						required
-						id="item-id"
-						type="number"
-						placeholder="goods_id"
+						id="buff-url"
+						placeholder="https://buff.163.com/market/"
 					/>
 				</div>
 				<div class="input-container">
@@ -37,6 +36,17 @@
 						<option value="rokazz">rokazz</option>
 						<option value="Gimzha">Gimzha</option>
 					</select>
+				</div>
+				<div class="input-container">
+					<label for="profit-margin">Desired 'discount':</label>
+					<input
+						required
+						id="profit-margin"
+						placeholder="10%"
+						type="number"
+						min="1"
+						max="100"
+					/>
 				</div>
 				<div class="btn-container">
 					<button class="btn btn-add" id="btn-add" type="button">
