@@ -17,12 +17,15 @@
 	<body>
 		<main>
 			<h1>Buff bot</h1>
-			<form action="#" method="post">
+			<form action="#" method="post" id="form">
 				<div class="input-container">
-					<label for="item-name">
-						What is the goods_id of your item?
-					</label>
-					<input id="item-name" type="text" placeholder="goods_id" />
+					<label for="item-id"> What is the id of your item? </label>
+					<input
+						required
+						id="item-id"
+						type="number"
+						placeholder="goods_id"
+					/>
 				</div>
 				<div class="input-container">
 					<label for="discord-id">Who are you?</label>
@@ -50,9 +53,8 @@
 			</form>
 
 			<div class="item-list">
-				<div class="item-container">
-					<div>Item name</div>
-					<div>Float</div>
+				<div id="item-id-container">
+					<div>Goods_id:</div>
 				</div>
 			</div>
 		</main>
