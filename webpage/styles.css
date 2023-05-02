@@ -33,13 +33,15 @@ main {
 	margin-bottom: 1em;
 }
 
-.input-container > input {
+.input-container > input,
+.input-container > select {
 	padding: 0.5em;
 	border-radius: 0.5em;
 	border: none;
 }
 
-.input-container > input:hover {
+.input-container > input:hover,
+.input-container > select:hover {
 	box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.097);
 }
 
