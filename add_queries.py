@@ -136,10 +136,10 @@ def add_item_by_name(name_param, float_param, pattern_id_param, discord_id_param
     connection.close()
 
 
-def add_item_by_id(goods_id_param, float_param, pattern_id_param, discord_id_param, margin_param):
+def add_item_by_id(buff_url, float_param, pattern_id_param, discord_id_param, margin_param):
     connection = open_connection()
     cursor = connection.cursor()
-    item = query_item_by_id(goods_id_param)
+    item = query_item_by_id(get_id_from_url(buff_url))
     insert_to_track(cursor, item, discord_id_param, float_param, pattern_id_param, margin_param)
     connection.commit()
     connection.close()
@@ -149,10 +149,10 @@ def add_item(mode, arg, float_param, pattern_id_param, discord_id_param, margin_
     # mode = 0 - insert by name
     # mode = 1 - insert by id
     # arg - name or id, depending on mode
-    if mode:
-        add_item_by_id(arg, float_param, pattern_id_param, '0', margin_param)
-    else:
+    if mode == 0:
         add_item_by_name(arg, float_param, pattern_id_param, '0', margin_param)
+    elif mode == 1:
+        add_item_by_id(arg, float_param, pattern_id_param, '0', margin_param)
 
 
 #id = get_id_from_url(input("URL: "))
