@@ -1,18 +1,38 @@
 function apiRequest() {
-	const xhr = new XMLHttpRequest();
-	xhr.open("POST", "http://127.0.0.1:5000/add-item");
-	xhr.setRequestHeader("Content-Type", "application/json");
-	xhr.setRequestHeader("Access-Control-Allow-Origin", '*')
-	const body = JSON.stringify({
-		mode: 1,
-		arg: goodsID.value,
-		float: 0,
-		pattern: '',
-		discord_id: String(IDS[selectUser.options[selectUser.selectedIndex].text]),
-		margin: profitMargin.value,
+	const options = {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			'Access-Control-Allow-Origin': '*',
+		},
+		body: JSON.stringify({
+			mode: 1,
+			arg: goodsID.value,
+			float: 0,
+			pattern: '',
+			discord_id: String(IDS[selectUser.value]),
+			margin: profitMargin.value,
+		}),
+	};
+	fetch('http://127.0.0.1:5000/add-item', options).then((response) => {
+		const container = document.querySelectorAll(
+			'.notification-container'
+		)[0];
+		const div = document.createElement('div');
+		div.style.backgroundColor = `${
+			response.status === 201 ? 'green' : 'red'
+		}`;
+		div.innerText = `${
+			response.status === 201
+				? 'Item uploaded to database successfully!'
+				: 'Something went wrong, try again.'
+		}`;
+		container.appendChild(div);
+
+		setTimeout(() => {
+			container.removeChild(div);
+		}, 5000);
 	});
-	console.log(IDS[selectUser.options[selectUser.selectedIndex].text]);
-	xhr.send(body);
 }
 
 const IDS = {
@@ -32,7 +52,7 @@ const btnSubmitItems = document.querySelector('#btn-submit');
 const goodsID = document.querySelector('#buff-url');
 const selectUser = document.querySelector('#discord-id');
 const goodsIDContainer = document.querySelector('#item-id-container');
-const profitMargin = document.querySelector('#profit-margin')
+const profitMargin = document.querySelector('#profit-margin');
 
 form.addEventListener('submit', (e) => e.preventDefault());
 
@@ -47,14 +67,14 @@ btnAddItem.addEventListener('click', () => {
 	if (!goodsID.value || IDlist.has(goodsID.value))
 		return alert('Prasišviesk galvą');
 
-	const id = goodsID.value;
+	// const id = goodsID.value;
 
-	IDlist.add(id);
-	const div = document.createElement('div');
-	div.innerText = `${id}`;
-	goodsIDContainer.appendChild(div);
+	// IDlist.add(id);
+	// const div = document.createElement('div');
+	// div.innerText = `${id}`;
+	// goodsIDContainer.appendChild(div);
 
-	console.log(IDlist);
+	// console.log(IDlist);
 
-	goodsID.value = '';
+	// goodsID.value = '';
 });

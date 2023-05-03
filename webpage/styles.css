@@ -27,6 +27,23 @@ main {
 	border-radius: 0.5em;
 }
 
+.notification-container {
+	display: flex;
+	flex-direction: column;
+	gap: 1em;
+	position: fixed;
+	top: 2vh;
+	right: 1vw;
+	color: white;
+}
+
+.notification-container > div {
+	padding: 1em;
+	border-radius: 0.5em;
+	font-size: clamp(0.5rem, 2.5vw, 0.85rem);
+	transition: all 0.5s ease-in-out;
+}
+
 form {
 	width: min(70%, 40rem);
 }
