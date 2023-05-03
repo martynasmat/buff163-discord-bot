@@ -16,10 +16,10 @@ def post():
         print(json_response)
 
         if str(json_response['mode']) == '':
-            return 'kazkas blogai su mode arg', 406
+            return {"message": "kazkas blogai su mode arg"}, 406
 
         if str(json_response['arg']) == '':
-            return 'kazkas blogai su arg arg', 406
+            return {"message":"kazkas blogai su arg arg"}, 406
 
         # if str(json_response['float']) == '':
         #     return 'kazkas blogai su float arg', 406
@@ -28,10 +28,10 @@ def post():
         #     return 'kazkas blogai su pattern arg', 406
 
         if str(json_response['discord_id']) == '':
-            return 'kazkas blogai su discord_id arg', 406
+            return {"message":"kazkas blogai su discord_id arg"}, 406
 
         if str(json_response['margin']) == '':
-            return 'kazkas blogai su margin arg', 406
+            return {"message":"kazkas blogai su margin arg"}, 406
 
         add_item(json_response['mode'], json_response['arg'],
                  json_response['float'], json_response['pattern'],
