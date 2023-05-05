@@ -5,6 +5,7 @@ import statistics
 import math
 import currency_converter as cc
 from webhook import construct_json, notify_user
+import time
 
 
 URL = 'https://buff.163.com/api/market/goods/sell_order?game=csgo'
@@ -93,6 +94,7 @@ def is_deal_found(item_obj_param, item_tracker_param):
 
 while True:
     for item_tracker in get_all_items_from_db():
+        time.sleep(10)
         item_obj = send_request(item_tracker)
         item_obj.assign_price_list(item_obj.json_data["data"]["items"])
         print(item_obj)
