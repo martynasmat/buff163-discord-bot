@@ -14,7 +14,7 @@ function apiRequest() {
 			margin: profitMargin.value,
 		}),
 	};
-	fetch('http://127.0.0.1:5000/add-item', options).then((response) => {
+	fetch('http://37.221.93.227:8000/add-item', options).then((response) => {
 		const container = document.querySelectorAll(
 			'.notification-container'
 		)[0];

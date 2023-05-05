@@ -91,15 +91,15 @@ def is_deal_found(item_obj_param, item_tracker_param):
             break
     return found_deal, deal_obj
 
+while True:
+    for item_tracker in get_all_items_from_db():
+        item_obj = send_request(item_tracker)
+        item_obj.assign_price_list(item_obj.json_data["data"]["items"])
+        print(item_obj)
+        find_deal = is_deal_found(item_obj, item_tracker)
+        if find_deal[0]:
+            deal_object = find_deal[1]
+            json_data = construct_json(deal_object)
+            notify_user(json_data)
 
-for item_tracker in get_all_items_from_db():
-    item_obj = send_request(item_tracker)
-    item_obj.assign_price_list(item_obj.json_data["data"]["items"])
-    print(item_obj)
-    find_deal = is_deal_found(item_obj, item_tracker)
-    if find_deal[0]:
-        deal_object = find_deal[1]
-        json_data = construct_json(deal_object)
-        notify_user(json_data)
-
-    print(item_obj.price_list)
+        print(item_obj.price_list)
