@@ -6,11 +6,12 @@ import math
 import currency_converter as cc
 from webhook import construct_json, notify_user
 import time
-
+from get_proxies import get_proxy
+import requests
 
 URL = 'https://buff.163.com/api/market/goods/sell_order?game=csgo'
 
-
+last_price_dict = dict()
 class Item:
     def __init__(self, json_data, purchase_url, name):
         self.json_data = json_data
@@ -50,17 +51,28 @@ def send_request(item_param):
     username = 'buffbot'
     password = 'bUffbot123123987987'
     proxy_login_headers = urllib3.make_headers(proxy_basic_auth=f'{username}:{password}')
-    entry = ('http://customer-%s:%s@pr.oxylabs.io:7777' %
-             (username, password))
-    query = urllib3.ProxyManager(entry, proxy_headers=proxy_login_headers)
+    # entry = ('http://customer-%s:%s@pr.oxylabs.io:7777' %
+    #         (username, password))
+    proxy_login = get_proxy()
+    entry = f'https://{proxy_login[2]}:{proxy_login[3]}@{proxy_login[0]}:{proxy_login[1]}'
+    print(entry)
+    # query = urllib3.ProxyManager(entry, proxy_headers=proxy_login_headers)
+    query = urllib3.ProxyManager(entry)
 
     req_url = f"{URL}&goods_id={item_param[2]}&page_num=1&sort_by=default&mode=&allow_tradable_cooldown=1&_=1682875931788"
 
     for _ in range(0, 20):
         try:
-            response = query.request('GET', req_url)
-            print(json.loads(response.data)["data"]["items"][0])
-            json_data = json.loads(response.data)
+            # response = query.request('GET', req_url)
+            response = requests.get(url=req_url,
+                                    proxies={
+                                        "http": f"http://{proxy_login[2]}:{proxy_login[3]}@{proxy_login[0]}:{proxy_login[1]}/",
+                                        "https": f"http://{proxy_login[2]}:{proxy_login[3]}@{proxy_login[0]}:{proxy_login[1]}",
+                                    })
+            print(response)
+            # print(json.loads(response.json())["data"]["items"][0])
+            # json_data = json.loads(response.json())
+            json_data = response.json()
             item_obj = Item(json_data, f"https://buff.163.com/goods/{item_param[2]}#tab=selling", item_param[0])
             return item_obj
         except:
@@ -94,7 +106,6 @@ def is_deal_found(item_obj_param, item_tracker_param):
 
 while True:
     for item_tracker in get_all_items_from_db():
-        time.sleep(10)
         item_obj = send_request(item_tracker)
         item_obj.assign_price_list(item_obj.json_data["data"]["items"])
         print(item_obj)
