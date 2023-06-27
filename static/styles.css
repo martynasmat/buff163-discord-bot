@@ -27,6 +27,17 @@ main {
 	border-radius: 0.5em;
 }
 
+@keyframes fade {
+	0% {
+		scale: 0;
+		opacity: 0;
+	}
+	100% {
+		scale: 1;
+		opacity: 1;
+	}
+}
+
 .notification-container {
 	display: flex;
 	flex-direction: column;
@@ -41,23 +52,23 @@ main {
 	padding: 1em;
 	border-radius: 0.5em;
 	font-size: clamp(0.5rem, 2.5vw, 0.85rem);
-	transition: all 0.5s ease-in-out;
+	animation: 0.25s ease-in-out 0s 1 fade;
 }
 
 form {
-	width: min(70%, 40rem);
+	width: min(100%, 25rem);
 }
 
 .input-container {
 	display: flex;
 	flex-direction: column;
 	margin-bottom: 1em;
-	width: min(70%, 40rem);
+	width: 100%;
 }
 
 .input-container > input,
 .input-container > select {
-	padding: 0.5em;
+	padding: 0.7em 1em;
 	border-radius: 0.5em;
 	border: none;
 }
@@ -77,7 +88,6 @@ form {
 
 .btn {
 	padding: 0.5em 1.2em;
-	border-radius: 0.15em;
 	font-size: 0.9rem;
 	border: none;
 	border-radius: 0.5em;
@@ -92,4 +102,8 @@ form {
 .btn-submit {
 	background-color: rgb(19, 173, 19);
 	color: white;
+}
+
+#item-id-container {
+	width: min(100%, 25rem);
 }
