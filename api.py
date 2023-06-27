@@ -30,12 +30,15 @@ def post():
         if str(json_response['discord_id']) == '':
             return {"message":"kazkas blogai su discord_id arg"}, 406
 
-        if str(json_response['margin']) == '':
-            return {"message":"kazkas blogai su margin arg"}, 406
+        # if str(json_response['margin']) == '':
+        #     return {"message":"kazkas blogai su margin arg"}, 406
 
-        add_item(json_response['mode'], json_response['arg'],
-                 json_response['float'], json_response['pattern'],
-                 json_response['discord_id'], json_response['margin'])
+        for item in json_response['arg']:
+            print(item)
+            add_item(json_response['mode'], item['url'],
+                     item['float'], item['pattern'],
+                     json_response['discord_id'], item['margin'])
+
         return json_response, 201
 
 

@@ -6,7 +6,7 @@ const IDS = {
 	rok: '280744687227109377',
 	rokazz: '598398078268997632',
 };
-const URLs = new Set();
+const URLs = [];
 
 const form = document.querySelector('#form');
 const btnAddItem = document.querySelector('#btn-add');
@@ -22,33 +22,49 @@ btnSubmitItems.addEventListener('click', apiRequest);
 
 btnAddItem.addEventListener('click', () => {
 	const url = buffURL.value;
+	const margin = profitMargin.value;
 
-	if (!url || URLs.has(url)) return alert('Prasišviesk galvą');
+	if (!url || !margin) return alert('Prasišviesk galvą');
 
-	URLs.add(url);
+	const item = {
+		url,
+		margin,
+		pattern: '',
+		float: 0,
+	}
+
+	URLs.push(item);
 	const div = document.createElement('div');
-	div.innerText = `${url}`;
+	div.innerText = `${JSON.stringify(item)}`;
 	goodsIDContainer.appendChild(div);
 
 	console.log(URLs);
 
 	buffURL.value = '';
+	profitMargin.value = '';
 });
 
 function apiRequest() {
+	if (URLs.length === 0) return alert('Add at least one item to your tracking list before submitting');
+
 	const options = {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
 			'Access-Control-Allow-Origin': '*',
 		},
+		// body: JSON.stringify({
+		// 	mode: 1,
+		// 	arg: buffURL.value,
+		// 	float: 0,
+		// 	pattern: '',
+		// 	discord_id: IDS[selectUser.value],
+		// 	margin: profitMargin.value,
+		// }),
 		body: JSON.stringify({
 			mode: 1,
-			arg: buffURL.value,
-			float: 0,
-			pattern: '',
+			arg: URLs,
 			discord_id: IDS[selectUser.value],
-			margin: profitMargin.value,
 		}),
 	};
 
