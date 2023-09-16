@@ -11,7 +11,9 @@
     "test": "echo \"No tests yet...\""
   },
   "dependencies": {
-    "azure-functions-core-tools": "^4.0.5348"
+    "azure-functions-core-tools": "^4.0.5348",
+    "dotenv": "^16.3.1",
+    "mysql2": "^3.6.1"
   },
   "devDependencies": {
     "@azure/functions": "^3.0.0",

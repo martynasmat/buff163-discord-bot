@@ -1,20 +1,18 @@
 {
-  "bindings": [
-    {
-      "authLevel": "function",
-      "type": "httpTrigger",
-      "direction": "in",
-      "name": "req",
-      "methods": [
-        "get",
-        "post"
-      ]
-    },
-    {
-      "type": "http",
-      "direction": "out",
-      "name": "res"
-    }
-  ],
-  "scriptFile": "../dist/apiHttpTrigger/index.js"
+    "bindings": [
+        {
+            "authLevel": "anonymous",
+            "route": "add-item/",
+            "type": "httpTrigger",
+            "direction": "in",
+            "name": "req",
+            "methods": ["post"]
+        },
+        {
+            "type": "http",
+            "direction": "out",
+            "name": "res"
+        }
+    ],
+    "scriptFile": "../dist/apiHttpTrigger/index.js"
 }
