@@ -8,7 +8,7 @@
 
 -   ### api/
 
-    Kodas, kuris hostinamas MS Azure. Atsakingas už trackerių idėjimą į DB. [Linkas į psl.](https://buff-api.azurewebsites.net) (veikia tik POST request).
+    Kodas, kuris hostinamas MS Azure. Atsakingas už trackerių idėjimą į DB. [Linkas į psl.](https://buff-api.azurewebsites.net/api/add-item/) (veikia tik POST request).
 
 -   ### docs/
 
