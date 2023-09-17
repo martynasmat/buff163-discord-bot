@@ -1,5 +1,9 @@
 # BUFF deal tracker
 
+<p align="center">
+  <img src="https://media2.giphy.com/media/XUFPGrX5Zis6Y/giphy.gif" alt="Epic explosion"/>
+</p>
+
 ## Folder structure
 
 -   ### api/
