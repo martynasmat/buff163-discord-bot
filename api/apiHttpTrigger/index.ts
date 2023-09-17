@@ -74,7 +74,7 @@ const httpTrigger: AzureFunction = async function (
 
         context.res = {
             status: 400,
-            body: JSON.stringify({ body: `Missing ${param} parameter.` }),
+            body: JSON.stringify({ message: `Missing ${param} parameter.` }),
         };
 
         return;
@@ -84,7 +84,9 @@ const httpTrigger: AzureFunction = async function (
 
     context.res = {
         status: 200,
-        body: `${JSON.stringify(request)}`,
+        body: JSON.stringify({
+            message: "Item tracker was added successfully.",
+        }),
     };
 };
 
