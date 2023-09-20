@@ -1,43 +1,3 @@
-function apiRequest() {
-    const options = {
-        method: "POST",
-        mode: "no-cors",
-        headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-        },
-        body: JSON.stringify({
-            mode: 1,
-            arg: goodsID.value,
-            float: 0,
-            pattern: "",
-            discord_id: IDS[selectUser.value],
-            margin: profitMargin.value,
-        }),
-    };
-    fetch("https://buff-api.azurewebsites.net/api/add-item/", options).then(
-        (response) => {
-            const container = document.querySelectorAll(
-                ".notification-container"
-            )[0];
-            const div = document.createElement("div");
-            div.style.backgroundColor = `${
-                response.status === 201 ? "green" : "red"
-            }`;
-            div.innerText = `${
-                response.status === 201
-                    ? "Item uploaded to database successfully!"
-                    : "Something went wrong, try again."
-            }`;
-            container.appendChild(div);
-
-            setTimeout(() => {
-                container.removeChild(div);
-            }, 5000);
-        }
-    );
-}
-
 const IDS = {
     tsitrina: "210699700158988288",
     mmmmmmm: "248428145919787008",
@@ -81,3 +41,49 @@ btnAddItem.addEventListener("click", () => {
 
     // goodsID.value = '';
 });
+
+function apiRequest() {
+    const options = {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify({
+            mode: 1,
+            arg: goodsID.value,
+            float: 1,
+            pattern: "1",
+            discord_id: IDS[selectUser.value],
+            margin: profitMargin.value,
+        }),
+    };
+
+    fetch("https://buff-api.azurewebsites.net/api/add-item/", options)
+        .then((response) => console.log(response))
+        .then((data) => {
+            console.log(data);
+
+            const container = document.querySelectorAll(
+                ".notification-container"
+            )[0];
+
+            console.log(response.status);
+
+            const div = document.createElement("div");
+            div.style.backgroundColor = `${
+                response.status === 201 ? "green" : "red"
+            }`;
+            div.innerText = `${
+                response.status === 201
+                    ? "Item uploaded to database successfully!"
+                    : "Something went wrong, try again."
+            }`;
+            container.appendChild(div);
+
+            setTimeout(() => {
+                container.removeChild(div);
+            }, 5000);
+        });
+}
