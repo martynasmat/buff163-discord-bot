@@ -83,7 +83,7 @@ const httpTrigger: AzureFunction = async function (
     await insert_tracker(request);
 
     context.res = {
-        status: 200,
+        status: 201,
         body: JSON.stringify({
             message: "Item tracker was added successfully.",
         }),
