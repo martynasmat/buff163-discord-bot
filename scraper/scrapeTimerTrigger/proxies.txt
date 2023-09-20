@@ -1,0 +1,9 @@
+185.199.229.156:7492:apmkyray:ry78ofp20t6q
+185.199.228.220:7300:apmkyray:ry78ofp20t6q
+185.199.231.45:8382:apmkyray:ry78ofp20t6q
+188.74.210.207:6286:apmkyray:ry78ofp20t6q
+188.74.183.10:8279:apmkyray:ry78ofp20t6q
+188.74.210.21:6100:apmkyray:ry78ofp20t6q
+45.155.68.129:8133:apmkyray:ry78ofp20t6q
+154.95.36.199:6893:apmkyray:ry78ofp20t6q
+45.94.47.66:8110:apmkyray:ry78ofp20t6q
