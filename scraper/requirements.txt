@@ -4,3 +4,5 @@
 
 azure-functions
 mysql-connector-python
+CurrencyConverter
+requests
