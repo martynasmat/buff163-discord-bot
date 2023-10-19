@@ -20,8 +20,8 @@ def main(mytimer: func.TimerRequest) -> None:
 
     connection = mysql.connector.connect(
         host=os.getenv('DB_HOST'),
-        user=os.getenv('DB_USERNAME'),
-        password=os.getenv('DB_PASSWORD'),
+        user=os.getenv('DB_USERNAME2'),
+        password=os.getenv('DB_PASSWORD2'),
         database=os.getenv('DB_NAME')
     )
 
