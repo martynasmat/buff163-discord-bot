@@ -3,8 +3,8 @@ import mysql.connector
 import datetime
 import logging
 import os
-from dotenv import load_dotenv
-load_dotenv()
+#from dotenv import load_dotenv
+#load_dotenv()
 
 from scrapeTimerTrigger.make_requests import send_request, get_all_items_from_db, is_deal_found
 from scrapeTimerTrigger.webhook import construct_json, notify_user
