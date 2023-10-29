@@ -4,11 +4,11 @@ import json
 
 def construct_json(deal_obj):
     json_dict = {
-        "content": "",
+        "content": f"<@{deal_obj.discord_id}>",
         "embeds":   [
                 {
                     "title": "DEAL FOUND!",
-                    "description": f"<@{deal_obj.discord_id}>\n**{deal_obj.name}**\n¥ {deal_obj.listing_price_cny} (~{round(deal_obj.listing_price_eur, 2)} €)\nFloat value: {deal_obj.float_val}\nApproximate profit margin: {round(100 - deal_obj.median_price / deal_obj.listing_price_cny, 2)}%\n\n{deal_obj.purchase_url}",
+                    "description": f"**{deal_obj.name}**\n¥ {deal_obj.listing_price_cny} (~{round(deal_obj.listing_price_eur, 2)} €)\nFloat value: {deal_obj.float_val}\nApproximate profit margin: {round(100 - deal_obj.median_price / deal_obj.listing_price_cny, 2)}%\n\n{deal_obj.purchase_url}",
                     "color": "4718336",
                     "image": {
                         "url": str(deal_obj.screenshot_url),
