@@ -77,7 +77,8 @@ def is_deal_found(item_obj_param, item_tracker_param):
         logging.info(f"""Price: {item_obj_param.json_data["data"]["items"][i]["price"]}""")
         logging.info(f"Margin: {100 - item_obj_param.price_list[i] / median * 100}")
         
-        if 100 - item_obj_param.price_list[i] / median * 100 >= int(desired_margin):
+        #if 100 - item_obj_param.price_list[i] / median * 100 >= int(desired_margin):
+        if 100 - item_obj_param.price_list[i] / item_obj_param.price_list[i + 1] * 100 >= int(desired_margin):
             found_deal = True
             deal_obj = Deal(
                             float(item_obj_param.json_data["data"]["items"][i]["price"]),

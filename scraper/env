@@ -1,6 +1,6 @@
 DB_HOST=aws.connect.psdb.cloud
 DB_USERNAME=epx3pprr1hmn4j3w1wi6
 DB_PASSWORD=pscale_pw_RTyHJhELh0OLHg32jKl55ImIgjBdXIPYt1o0C1LQgua
-DB_USERNAME2=uurt1675my33qqlfh88h
-DB_PASSWORD2=pscale_pw_52tEfCiwWY1lmYWp50vToJgpKdhf7Gcet1hq7mT7se3
+DB_USERNAME=uurt1675my33qqlfh88h
+DB_PASSWORD=pscale_pw_52tEfCiwWY1lmYWp50vToJgpKdhf7Gcet1hq7mT7se3
 DB_NAME=buff-db-prod
