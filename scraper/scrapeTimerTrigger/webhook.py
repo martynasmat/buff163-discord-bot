@@ -8,7 +8,7 @@ def construct_json(deal_obj):
         "embeds":   [
                 {
                     "title": "DEAL FOUND!",
-                    "description": f"**{deal_obj.name}**\n¥ {deal_obj.listing_price_cny} (~{round(deal_obj.listing_price_eur, 2)} €)\nFloat value: {deal_obj.float_val}\nApproximate profit margin: {round(deal_obj.median_price / deal_obj.listing_price_cny - 100, 2)}%\n\n{deal_obj.purchase_url}",
+                    "description": f"**{deal_obj.name}**\n¥ {deal_obj.listing_price_cny} (~{round(deal_obj.listing_price_eur, 2)} €)\nFloat value: {deal_obj.float_val}\nApproximate profit margin: {round(100 - deal_obj.median_price / deal_obj.listing_price_cny * 100, 2)}%\n\n{deal_obj.purchase_url}",
                     "color": "4718336",
                     "image": {
                         "url": str(deal_obj.screenshot_url),
