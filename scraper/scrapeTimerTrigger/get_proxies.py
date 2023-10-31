@@ -1,7 +1,8 @@
 import random
+import os
 
 def get_proxy():
-    with open('proxies.txt', 'r') as f:
+    with open('scrapeTimerTrigger/proxies.txt', 'r') as f:
         lines = []
         for line in f:
             line = line.replace('\n', '')
